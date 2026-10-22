@@ -64,3 +64,8 @@ export type InventoryMovement = Prisma.InventoryMovementModel
  * 
  */
 export type SellerProfile = Prisma.SellerProfileModel
+/**
+ * Model AuthOtpChallenge
+ * 
+ */
+export type AuthOtpChallenge = Prisma.AuthOtpChallengeModel

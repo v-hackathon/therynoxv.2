@@ -72,3 +72,12 @@ export const InventoryMovementType = {
 } as const
 
 export type InventoryMovementType = (typeof InventoryMovementType)[keyof typeof InventoryMovementType]
+
+
+export const AuthOtpPurpose = {
+  LOGIN: 'LOGIN',
+  EMAIL_VERIFICATION: 'EMAIL_VERIFICATION',
+  PASSWORD_RESET: 'PASSWORD_RESET'
+} as const
+
+export type AuthOtpPurpose = (typeof AuthOtpPurpose)[keyof typeof AuthOtpPurpose]

@@ -28,7 +28,9 @@ export type UserMinAggregateOutputType = {
   id: string | null
   name: string | null
   email: string | null
+  therynoxId: string | null
   password: string | null
+  emailVerifiedAt: Date | null
   role: $Enums.UserRole | null
   sellerStatus: $Enums.SellerStatus | null
   createdAt: Date | null
@@ -39,7 +41,9 @@ export type UserMaxAggregateOutputType = {
   id: string | null
   name: string | null
   email: string | null
+  therynoxId: string | null
   password: string | null
+  emailVerifiedAt: Date | null
   role: $Enums.UserRole | null
   sellerStatus: $Enums.SellerStatus | null
   createdAt: Date | null
@@ -50,7 +54,9 @@ export type UserCountAggregateOutputType = {
   id: number
   name: number
   email: number
+  therynoxId: number
   password: number
+  emailVerifiedAt: number
   role: number
   sellerStatus: number
   createdAt: number
@@ -63,7 +69,9 @@ export type UserMinAggregateInputType = {
   id?: true
   name?: true
   email?: true
+  therynoxId?: true
   password?: true
+  emailVerifiedAt?: true
   role?: true
   sellerStatus?: true
   createdAt?: true
@@ -74,7 +82,9 @@ export type UserMaxAggregateInputType = {
   id?: true
   name?: true
   email?: true
+  therynoxId?: true
   password?: true
+  emailVerifiedAt?: true
   role?: true
   sellerStatus?: true
   createdAt?: true
@@ -85,7 +95,9 @@ export type UserCountAggregateInputType = {
   id?: true
   name?: true
   email?: true
+  therynoxId?: true
   password?: true
+  emailVerifiedAt?: true
   role?: true
   sellerStatus?: true
   createdAt?: true
@@ -169,7 +181,9 @@ export type UserGroupByOutputType = {
   id: string
   name: string
   email: string
+  therynoxId: string
   password: string
+  emailVerifiedAt: Date | null
   role: $Enums.UserRole
   sellerStatus: $Enums.SellerStatus
   createdAt: Date
@@ -201,7 +215,9 @@ export type UserWhereInput = {
   id?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
+  therynoxId?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFilter<"User"> | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -216,7 +232,9 @@ export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  therynoxId?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   sellerStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -230,11 +248,13 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
+  therynoxId?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFilter<"User"> | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -243,13 +263,15 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   categoriesCreated?: Prisma.CategoryListRelationFilter
   inventoryMovements?: Prisma.InventoryMovementListRelationFilter
   sellerProfile?: Prisma.XOR<Prisma.SellerProfileNullableScalarRelationFilter, Prisma.SellerProfileWhereInput> | null
-}, "id" | "email">
+}, "id" | "email" | "therynoxId">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  therynoxId?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   sellerStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -266,7 +288,9 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
+  therynoxId?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  emailVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusWithAggregatesFilter<"User"> | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -277,7 +301,9 @@ export type UserCreateInput = {
   id?: string
   name: string
   email: string
+  therynoxId: string
   password: string
+  emailVerifiedAt?: Date | string | null
   role?: $Enums.UserRole
   sellerStatus?: $Enums.SellerStatus
   createdAt?: Date | string
@@ -292,7 +318,9 @@ export type UserUncheckedCreateInput = {
   id?: string
   name: string
   email: string
+  therynoxId: string
   password: string
+  emailVerifiedAt?: Date | string | null
   role?: $Enums.UserRole
   sellerStatus?: $Enums.SellerStatus
   createdAt?: Date | string
@@ -307,7 +335,9 @@ export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  therynoxId?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -322,7 +352,9 @@ export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  therynoxId?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -337,7 +369,9 @@ export type UserCreateManyInput = {
   id?: string
   name: string
   email: string
+  therynoxId: string
   password: string
+  emailVerifiedAt?: Date | string | null
   role?: $Enums.UserRole
   sellerStatus?: $Enums.SellerStatus
   createdAt?: Date | string
@@ -348,7 +382,9 @@ export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  therynoxId?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -359,7 +395,9 @@ export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  therynoxId?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -370,7 +408,9 @@ export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  therynoxId?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
   sellerStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -381,7 +421,9 @@ export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  therynoxId?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
   sellerStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -392,7 +434,9 @@ export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  therynoxId?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
   sellerStatus?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -411,6 +455,10 @@ export type UserNullableScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type EnumUserRoleFieldUpdateOperationsInput = {
@@ -487,7 +535,9 @@ export type UserCreateWithoutProductsInput = {
   id?: string
   name: string
   email: string
+  therynoxId: string
   password: string
+  emailVerifiedAt?: Date | string | null
   role?: $Enums.UserRole
   sellerStatus?: $Enums.SellerStatus
   createdAt?: Date | string
@@ -501,7 +551,9 @@ export type UserUncheckedCreateWithoutProductsInput = {
   id?: string
   name: string
   email: string
+  therynoxId: string
   password: string
+  emailVerifiedAt?: Date | string | null
   role?: $Enums.UserRole
   sellerStatus?: $Enums.SellerStatus
   createdAt?: Date | string
@@ -531,7 +583,9 @@ export type UserUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  therynoxId?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -545,7 +599,9 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  therynoxId?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -559,7 +615,9 @@ export type UserCreateWithoutCategoriesCreatedInput = {
   id?: string
   name: string
   email: string
+  therynoxId: string
   password: string
+  emailVerifiedAt?: Date | string | null
   role?: $Enums.UserRole
   sellerStatus?: $Enums.SellerStatus
   createdAt?: Date | string
@@ -573,7 +631,9 @@ export type UserUncheckedCreateWithoutCategoriesCreatedInput = {
   id?: string
   name: string
   email: string
+  therynoxId: string
   password: string
+  emailVerifiedAt?: Date | string | null
   role?: $Enums.UserRole
   sellerStatus?: $Enums.SellerStatus
   createdAt?: Date | string
@@ -603,7 +663,9 @@ export type UserUpdateWithoutCategoriesCreatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  therynoxId?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -617,7 +679,9 @@ export type UserUncheckedUpdateWithoutCategoriesCreatedInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  therynoxId?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -631,7 +695,9 @@ export type UserCreateWithoutInventoryMovementsInput = {
   id?: string
   name: string
   email: string
+  therynoxId: string
   password: string
+  emailVerifiedAt?: Date | string | null
   role?: $Enums.UserRole
   sellerStatus?: $Enums.SellerStatus
   createdAt?: Date | string
@@ -645,7 +711,9 @@ export type UserUncheckedCreateWithoutInventoryMovementsInput = {
   id?: string
   name: string
   email: string
+  therynoxId: string
   password: string
+  emailVerifiedAt?: Date | string | null
   role?: $Enums.UserRole
   sellerStatus?: $Enums.SellerStatus
   createdAt?: Date | string
@@ -675,7 +743,9 @@ export type UserUpdateWithoutInventoryMovementsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  therynoxId?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -689,7 +759,9 @@ export type UserUncheckedUpdateWithoutInventoryMovementsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  therynoxId?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -703,7 +775,9 @@ export type UserCreateWithoutSellerProfileInput = {
   id?: string
   name: string
   email: string
+  therynoxId: string
   password: string
+  emailVerifiedAt?: Date | string | null
   role?: $Enums.UserRole
   sellerStatus?: $Enums.SellerStatus
   createdAt?: Date | string
@@ -717,7 +791,9 @@ export type UserUncheckedCreateWithoutSellerProfileInput = {
   id?: string
   name: string
   email: string
+  therynoxId: string
   password: string
+  emailVerifiedAt?: Date | string | null
   role?: $Enums.UserRole
   sellerStatus?: $Enums.SellerStatus
   createdAt?: Date | string
@@ -747,7 +823,9 @@ export type UserUpdateWithoutSellerProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  therynoxId?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -761,7 +839,9 @@ export type UserUncheckedUpdateWithoutSellerProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  therynoxId?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   sellerStatus?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -824,7 +904,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   name?: boolean
   email?: boolean
+  therynoxId?: boolean
   password?: boolean
+  emailVerifiedAt?: boolean
   role?: boolean
   sellerStatus?: boolean
   createdAt?: boolean
@@ -840,7 +922,9 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   email?: boolean
+  therynoxId?: boolean
   password?: boolean
+  emailVerifiedAt?: boolean
   role?: boolean
   sellerStatus?: boolean
   createdAt?: boolean
@@ -851,7 +935,9 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   email?: boolean
+  therynoxId?: boolean
   password?: boolean
+  emailVerifiedAt?: boolean
   role?: boolean
   sellerStatus?: boolean
   createdAt?: boolean
@@ -862,14 +948,16 @@ export type UserSelectScalar = {
   id?: boolean
   name?: boolean
   email?: boolean
+  therynoxId?: boolean
   password?: boolean
+  emailVerifiedAt?: boolean
   role?: boolean
   sellerStatus?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "sellerStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "therynoxId" | "password" | "emailVerifiedAt" | "role" | "sellerStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   products?: boolean | Prisma.User$productsArgs<ExtArgs>
   categoriesCreated?: boolean | Prisma.User$categoriesCreatedArgs<ExtArgs>
@@ -892,7 +980,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: string
     name: string
     email: string
+    therynoxId: string
     password: string
+    emailVerifiedAt: Date | null
     role: $Enums.UserRole
     sellerStatus: $Enums.SellerStatus
     createdAt: Date
@@ -1327,7 +1417,9 @@ export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
+  readonly therynoxId: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
+  readonly emailVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly sellerStatus: Prisma.FieldRef<"User", 'SellerStatus'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>

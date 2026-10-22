@@ -55,7 +55,8 @@ export const ModelName = {
   Product: 'Product',
   Category: 'Category',
   InventoryMovement: 'InventoryMovement',
-  SellerProfile: 'SellerProfile'
+  SellerProfile: 'SellerProfile',
+  AuthOtpChallenge: 'AuthOtpChallenge'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,7 +79,9 @@ export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
+  therynoxId: 'therynoxId',
   password: 'password',
+  emailVerifiedAt: 'emailVerifiedAt',
   role: 'role',
   sellerStatus: 'sellerStatus',
   createdAt: 'createdAt',
@@ -163,6 +166,20 @@ export const SellerProfileScalarFieldEnum = {
 } as const
 
 export type SellerProfileScalarFieldEnum = (typeof SellerProfileScalarFieldEnum)[keyof typeof SellerProfileScalarFieldEnum]
+
+
+export const AuthOtpChallengeScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  codeHash: 'codeHash',
+  purpose: 'purpose',
+  expiresAt: 'expiresAt',
+  attempts: 'attempts',
+  consumedAt: 'consumedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AuthOtpChallengeScalarFieldEnum = (typeof AuthOtpChallengeScalarFieldEnum)[keyof typeof AuthOtpChallengeScalarFieldEnum]
 
 
 export const SortOrder = {

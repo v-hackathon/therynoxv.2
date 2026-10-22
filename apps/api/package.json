@@ -3,16 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nest start --watch",
-    "build": "nest build",
-    "start": "node dist/main.js",
-    "lint": "eslint \"src/**/*.ts\"",
-    "typecheck": "tsc --noEmit",
-    "postinstall": "prisma skills sync || exit 0",
-    "test:security": "pnpm build && node --test test/security.test.cjs",
-    "test:integration": "pnpm build && node --test test/http.integration.test.cjs",
-    "seed:test-accounts": "pnpm build && node dist/scripts/seed-test-accounts.js"
-  },
+  "dev": "pnpm prisma:generate && nest start --watch",
+  "build": "pnpm prisma:generate && nest build",
+  "start": "node dist/main.js",
+  "lint": "eslint \"src/**/*.ts\"",
+  "typecheck": "pnpm prisma:generate && tsc --noEmit",
+  "prisma:generate": "prisma generate --schema prisma/schema.prisma",
+  "postinstall": "prisma skills sync || exit 0",
+  "test:security": "pnpm build && node --test test/security.test.cjs",
+  "test:integration": "pnpm build && node --test test/http.integration.test.cjs",
+  "seed:test-accounts": "pnpm build && node dist/scripts/seed-test-accounts.js"
+},
   "dependencies": {
     "@nestjs/common": "^11.1.6",
     "@nestjs/config": "^4.0.2",

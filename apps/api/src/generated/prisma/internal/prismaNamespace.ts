@@ -401,7 +401,8 @@ export const ModelName = {
   Product: 'Product',
   Category: 'Category',
   InventoryMovement: 'InventoryMovement',
-  SellerProfile: 'SellerProfile'
+  SellerProfile: 'SellerProfile',
+  AuthOtpChallenge: 'AuthOtpChallenge'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -417,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "product" | "category" | "inventoryMovement" | "sellerProfile"
+    modelProps: "user" | "product" | "category" | "inventoryMovement" | "sellerProfile" | "authOtpChallenge"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -791,6 +792,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AuthOtpChallenge: {
+      payload: Prisma.$AuthOtpChallengePayload<ExtArgs>
+      fields: Prisma.AuthOtpChallengeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AuthOtpChallengeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthOtpChallengePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AuthOtpChallengeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthOtpChallengePayload>
+        }
+        findFirst: {
+          args: Prisma.AuthOtpChallengeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthOtpChallengePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AuthOtpChallengeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthOtpChallengePayload>
+        }
+        findMany: {
+          args: Prisma.AuthOtpChallengeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthOtpChallengePayload>[]
+        }
+        create: {
+          args: Prisma.AuthOtpChallengeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthOtpChallengePayload>
+        }
+        createMany: {
+          args: Prisma.AuthOtpChallengeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AuthOtpChallengeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthOtpChallengePayload>[]
+        }
+        delete: {
+          args: Prisma.AuthOtpChallengeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthOtpChallengePayload>
+        }
+        update: {
+          args: Prisma.AuthOtpChallengeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthOtpChallengePayload>
+        }
+        deleteMany: {
+          args: Prisma.AuthOtpChallengeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AuthOtpChallengeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AuthOtpChallengeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthOtpChallengePayload>[]
+        }
+        upsert: {
+          args: Prisma.AuthOtpChallengeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthOtpChallengePayload>
+        }
+        aggregate: {
+          args: Prisma.AuthOtpChallengeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAuthOtpChallenge>
+        }
+        groupBy: {
+          args: Prisma.AuthOtpChallengeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthOtpChallengeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AuthOtpChallengeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthOtpChallengeCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -834,7 +909,9 @@ export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
+  therynoxId: 'therynoxId',
   password: 'password',
+  emailVerifiedAt: 'emailVerifiedAt',
   role: 'role',
   sellerStatus: 'sellerStatus',
   createdAt: 'createdAt',
@@ -921,6 +998,20 @@ export const SellerProfileScalarFieldEnum = {
 export type SellerProfileScalarFieldEnum = (typeof SellerProfileScalarFieldEnum)[keyof typeof SellerProfileScalarFieldEnum]
 
 
+export const AuthOtpChallengeScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  codeHash: 'codeHash',
+  purpose: 'purpose',
+  expiresAt: 'expiresAt',
+  attempts: 'attempts',
+  consumedAt: 'consumedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AuthOtpChallengeScalarFieldEnum = (typeof AuthOtpChallengeScalarFieldEnum)[keyof typeof AuthOtpChallengeScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -966,6 +1057,20 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
  * Reference to a field of type 'UserRole'
  */
 export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
@@ -990,20 +1095,6 @@ export type EnumSellerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'SellerStatus[]'
  */
 export type ListEnumSellerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SellerStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime'
- */
-export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime[]'
- */
-export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -1095,6 +1186,20 @@ export type EnumKycStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
  * Reference to a field of type 'KycStatus[]'
  */
 export type ListEnumKycStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KycStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AuthOtpPurpose'
+ */
+export type EnumAuthOtpPurposeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthOtpPurpose'>
+    
+
+
+/**
+ * Reference to a field of type 'AuthOtpPurpose[]'
+ */
+export type ListEnumAuthOtpPurposeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuthOtpPurpose[]'>
     
 
 /**
@@ -1253,6 +1358,7 @@ export type GlobalOmitConfig = {
   category?: Prisma.CategoryOmit
   inventoryMovement?: Prisma.InventoryMovementOmit
   sellerProfile?: Prisma.SellerProfileOmit
+  authOtpChallenge?: Prisma.AuthOtpChallengeOmit
 }
 
 /* Types for Logging */
