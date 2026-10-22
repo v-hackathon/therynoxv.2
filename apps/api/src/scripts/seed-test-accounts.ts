@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import * as bcrypt from 'bcrypt';
+import { randomInt } from 'node:crypto';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient, UserRole, SellerStatus } from '../generated/prisma/client';
 
@@ -7,6 +8,13 @@ import { PrismaClient, UserRole, SellerStatus } from '../generated/prisma/client
  * Development-only, idempotent test-account seeder.
  * It creates missing accounts only. Existing users are never changed or deleted.
  */
+function createTherynoxId() {
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let suffix = '';
+  for (let i = 0; i < 8; i++) suffix += alphabet[randomInt(0, alphabet.length)];
+  return `THY-${suffix}`;
+}
+
 async function main() {
   if (process.env.NODE_ENV === 'production') {
     throw new Error('Refusing to seed test accounts when NODE_ENV=production.');
@@ -49,6 +57,7 @@ async function main() {
         data: {
           name: account.name,
           email: account.email,
+          therynoxId: createTherynoxId(),
           password: passwordHash,
           role: account.role,
           ...(account.sellerStatus ? { sellerStatus: account.sellerStatus } : {}),

@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -10,7 +10,13 @@ datasource db {
 enum UserRole {
   CUSTOMER
   SELLER
+  SUPPLIER
+  ADMIN_STAFF
+  MANAGER
+  CEO
   ADMIN
+  MAIN_ADMIN
+  SUPER_ADMIN
 }
 
 enum SellerStatus {
@@ -35,16 +41,33 @@ enum KycStatus {
   REJECTED
 }
 
+enum ProductStatus {
+  DRAFT
+  IN_REVIEW
+  APPROVED
+  REJECTED
+  ARCHIVED
+}
+
+enum InventoryMovementType {
+  INITIAL_STOCK
+  ADJUSTMENT
+}
+
 model User {
   id           String         @id @default(uuid())
   name         String
   email        String         @unique
+  therynoxId   String         @unique
   password     String
+  emailVerifiedAt DateTime?
   role         UserRole       @default(CUSTOMER)
   sellerStatus SellerStatus   @default(NOT_APPLIED)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   products     Product[]
+  categoriesCreated Category[] @relation("CategoryCreator")
+  inventoryMovements InventoryMovement[]
   sellerProfile SellerProfile?
 }
 
@@ -58,9 +81,54 @@ model Product {
   price       Float
   stock       Int      @default(0)
   imageUrl    String?
+  sku         String?        @unique
+  status      ProductStatus  @default(DRAFT)
+  categoryId  String?
+  category    Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  rejectionReason String?
+  submittedAt DateTime?
+  reviewedAt  DateTime?
+  inventoryMovements InventoryMovement[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  @@index([sellerId, createdAt])
+  @@index([status, createdAt])
+  @@index([categoryId, status])
+}
+
+model Category {
+  id          String     @id @default(uuid())
+  name        String
+  slug        String     @unique
+  description String?
+  parentId    String?
+  parent      Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: Restrict)
+  children    Category[] @relation("CategoryTree")
+  products    Product[]
+  createdById String?
+  createdBy   User?      @relation("CategoryCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([parentId, isActive])
+}
+
+model InventoryMovement {
+  id          String                @id @default(uuid())
+  productId   String
+  product     Product               @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sellerId    String
+  seller      User                  @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  type        InventoryMovementType
+  delta       Int
+  beforeStock Int
+  afterStock  Int
+  note        String?
+  createdAt   DateTime              @default(now())
+
+  @@index([productId, createdAt])
   @@index([sellerId, createdAt])
 }
 
@@ -87,4 +155,25 @@ model SellerProfile {
   updatedAt    DateTime           @updatedAt
 
   @@index([kycStatus, submittedAt])
+}
+
+
+enum AuthOtpPurpose {
+  LOGIN
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+}
+
+model AuthOtpChallenge {
+  id          String         @id @default(uuid())
+  email       String
+  codeHash    String
+  purpose     AuthOtpPurpose @default(LOGIN)
+  expiresAt   DateTime
+  attempts    Int            @default(0)
+  consumedAt  DateTime?
+  createdAt   DateTime       @default(now())
+
+  @@index([email, purpose, createdAt])
+  @@index([expiresAt])
 }

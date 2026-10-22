@@ -49,17 +49,40 @@ class RegisterDto {
   password!: string;
 }
 
-class LoginDto {
+class GoogleLoginDto {
+  @IsString()
+  @MinLength(20)
+  @MaxLength(10000)
+  credential!: string;
+}
+
+class AuthIdentifierDto {
+  @IsOptional()
   @IsEmail()
   @MaxLength(254)
-  email!: string;
+  email?: string;
 
+  @IsOptional()
+  @IsString()
+  @MinLength(3)
+  @MaxLength(254)
+  identifier?: string;
+}
+
+class OtpRequestDto extends AuthIdentifierDto {}
+
+class OtpVerifyDto extends AuthIdentifierDto {
+  @IsString()
+  @Matches(/^[0-9]{6}$/, { message: 'OTP must be six digits' })
+  code!: string;
+}
+
+class LoginDto extends AuthIdentifierDto {
   @IsString()
   @MinLength(1)
   @MaxLength(72)
   password!: string;
 }
-
 
 class SellerApplicationDto {
   @IsString() @MinLength(2) @MaxLength(120)
@@ -111,6 +134,27 @@ export class AuthController {
   @ApiOperation({ summary: 'Register a new user' })
   register(@Body() body: RegisterDto) {
     return this.authService.register(body);
+  }
+
+  @Post('google')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Verify a Google ID token and sign in to Therynox' })
+  googleLogin(@Body() body: GoogleLoginDto) {
+    return this.authService.loginWithGoogle(body.credential);
+  }
+
+  @Post('otp/request')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Send a one-time email sign-in code' })
+  requestLoginOtp(@Body() body: OtpRequestDto) {
+    return this.authService.requestLoginOtp(body.identifier ?? body.email ?? '');
+  }
+
+  @Post('otp/verify')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Verify a one-time email sign-in code and receive an access token' })
+  verifyLoginOtp(@Body() body: OtpVerifyDto) {
+    return this.authService.verifyLoginOtp(body.identifier ?? body.email ?? '', body.code);
   }
 
   @Post('login')

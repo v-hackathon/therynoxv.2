@@ -81,3 +81,12 @@ The HTTP integration suite creates a unique test user in the configured database
 
 ## Phase 2 seller onboarding
 See `SELLER_ONBOARDING_PHASE_2.md` for migration and setup steps.
+
+
+## Email OTP sign-in
+See `AUTH_EMAIL_OTP_PHASE_1_8.md` for setup, migration, and security notes. Email OTP requires a configured Resend sender and API key.
+
+
+## Authentication setup
+
+For local email OTP and Google sign-in configuration, see [AUTHENTICATION_SETUP.md](./AUTHENTICATION_SETUP.md).

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { FormEvent, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { GoogleSignInButton } from '../../components/auth/google-sign-in';
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1').replace(/\/$/, '');
 
@@ -24,6 +25,15 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [createdTherynoxId, setCreatedTherynoxId] = useState('');
+
+  function handleGoogleAuthenticated(payload: { user?: { role: string; sellerStatus?: string } }) {
+    if (!payload.user) return;
+    const user = payload.user;
+    const dashboardByRole: Record<string, string> = { SUPER_ADMIN: '/super-admin', MAIN_ADMIN: '/main-admin', ADMIN: '/admin', CEO: '/ceo', MANAGER: '/manager', ADMIN_STAFF: '/staff', SUPPLIER: '/supplier' };
+    if (user.role === 'SELLER' && user.sellerStatus !== 'APPROVED') router.replace('/seller/apply');
+    else router.replace(dashboardByRole[user.role] || (user.role === 'SELLER' ? '/seller/products' : '/account'));
+  }
 
   const ruleResults = useMemo(() => passwordRules.map(rule => rule.test(password)), [password]);
   const strength = ruleResults.filter(Boolean).length;
@@ -51,20 +61,22 @@ export default function RegisterPage() {
       });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(Array.isArray(payload.message) ? payload.message.join(', ') : payload.message || 'Could not create account.');
-      setNotice('Account created. Signing you in…');
+      const assignedTherynoxId = payload.user?.therynoxId || '';
+      setCreatedTherynoxId(assignedTherynoxId);
+      setNotice('Account created successfully. Save your Therynox ID for future sign-ins.');
       const loginResponse = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
+        body: JSON.stringify({ identifier: email.trim().toLowerCase(), password }),
       });
       const login = await loginResponse.json().catch(() => ({}));
       if (!loginResponse.ok || !login.accessToken || !login.user) {
-        router.push('/login');
+        setNotice('Your account was created. Save your Therynox ID, then sign in from the login page.');
         return;
       }
       sessionStorage.setItem('therynox_access_token', login.accessToken);
       sessionStorage.setItem('therynox_user', JSON.stringify(login.user));
-      router.push('/account');
+      setCreatedTherynoxId(login.user.therynoxId || assignedTherynoxId);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not connect to the Therynox API.');
     } finally {
@@ -89,6 +101,8 @@ export default function RegisterPage() {
         <div className="auth-card-top"><span className="auth-card-kicker">JOIN THE MARKETPLACE</span><span className="auth-step">01 / CREATE</span></div>
         <h2>Create account</h2>
         <p className="auth-subtitle">A few details and you’re ready to get started.</p>
+        <GoogleSignInButton onAuthenticated={handleGoogleAuthenticated} />
+        <div className="auth-divider"><span /> <small>OR CREATE WITH EMAIL</small> <span /></div>
         <form onSubmit={submit} className="auth-form auth-form-light">
           <label htmlFor="name">Full name<input id="name" autoComplete="name" required minLength={2} maxLength={100} value={name} onChange={e => setName(e.target.value)} placeholder="Your name" /></label>
           <label htmlFor="email">Email address<input id="email" type="email" autoComplete="email" required maxLength={254} value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" /></label>
@@ -108,7 +122,12 @@ export default function RegisterPage() {
           <label className="password-show-toggle"><input type="checkbox" checked={showPassword} onChange={e => setShowPassword(e.target.checked)} /> Show passwords</label>
           {error && <div className="auth-error" role="alert">{error}</div>}
           {notice && <div className="auth-success" role="status">{notice}</div>}
-          <button type="submit" disabled={loading || !passwordStrong || !passwordsMatch}>{loading ? 'Creating account…' : 'Create your account'} <span>↗</span></button>
+          {createdTherynoxId && <div className="auth-success" role="status" style={{ marginTop: 12 }}>
+            <strong>Your Therynox ID</strong>
+            <code style={{ display: 'block', fontSize: 20, letterSpacing: 1, margin: '8px 0' }}>{createdTherynoxId}</code>
+            <button type="button" className="auth-submit" onClick={() => router.replace('/account')}>Continue to Therynox <span>↗</span></button>
+          </div>}
+          <button type="submit" disabled={loading || !passwordStrong || !passwordsMatch || Boolean(createdTherynoxId)}>{loading ? 'Creating account…' : 'Create your account'} <span>↗</span></button>
         </form>
         <div className="auth-switch">Already have an account? <Link href="/login">Sign in</Link></div>
         <p className="auth-security">Passwords are stored as secure bcrypt hashes, never as plain text. New accounts start with customer access.</p>

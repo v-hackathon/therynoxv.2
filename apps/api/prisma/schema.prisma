@@ -58,7 +58,9 @@ model User {
   id           String         @id @default(uuid())
   name         String
   email        String         @unique
+  therynoxId   String         @unique
   password     String
+  emailVerifiedAt DateTime?
   role         UserRole       @default(CUSTOMER)
   sellerStatus SellerStatus   @default(NOT_APPLIED)
   createdAt    DateTime       @default(now())
@@ -153,4 +155,25 @@ model SellerProfile {
   updatedAt    DateTime           @updatedAt
 
   @@index([kycStatus, submittedAt])
+}
+
+
+enum AuthOtpPurpose {
+  LOGIN
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+}
+
+model AuthOtpChallenge {
+  id          String         @id @default(uuid())
+  email       String
+  codeHash    String
+  purpose     AuthOtpPurpose @default(LOGIN)
+  expiresAt   DateTime
+  attempts    Int            @default(0)
+  consumedAt  DateTime?
+  createdAt   DateTime       @default(now())
+
+  @@index([email, purpose, createdAt])
+  @@index([expiresAt])
 }
